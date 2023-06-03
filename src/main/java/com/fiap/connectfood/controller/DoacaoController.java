@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-
 @RestController
 @RequestMapping("/doacao")
 @CrossOrigin(value = "*", allowedHeaders = "*")
@@ -121,6 +120,14 @@ public class DoacaoController {
     public ResponseEntity<List<DoacaoModel>> listarDoacoesFinalizadas() {
         List<DoacaoModel> doacoesFinalizadas = doacaoService.findByDoacaoFinalizada();
         return ResponseEntity.ok(doacoesFinalizadas);
+    }
+
+    //WEB Endpoints
+    @GetMapping("/total-doacao")
+    @ApiOperation("Total de doações feitas")
+    public ResponseEntity<Integer> getTotalDonations() {
+        int totalDonations = getDoacaoService().getAllDonations().size();
+        return ResponseEntity.ok(totalDonations);
     }
 
     public DoacaoService getDoacaoService() {

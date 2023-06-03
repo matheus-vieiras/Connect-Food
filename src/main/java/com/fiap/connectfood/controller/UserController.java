@@ -100,6 +100,21 @@ public class UserController {
         return ResponseEntity.ok(usuariosCurtidos);
     }
 
+    //WEB Endpoints
+    @GetMapping("/total-doadores")
+    @ApiOperation("Trazer total de doadores")
+    public ResponseEntity<Integer> getTotalDonorsQunatity() {
+        int donorsQtd = userService.findAllByType(UserTypeEnum.DONOR).size();
+        return ResponseEntity.ok(donorsQtd);
+    }
+
+    @GetMapping("/total-recebedores")
+    @ApiOperation("Trazer total de recebedores")
+    public ResponseEntity<Integer> getTotalReceiversQunatity() {
+        int receiversQtd = userService.findAllByType(UserTypeEnum.RECEIVER).size();
+        return ResponseEntity.ok(receiversQtd);
+    }
+
     public UserService getUserService() {
         return userService;
     }

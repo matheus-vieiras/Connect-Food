@@ -103,7 +103,7 @@ public class UserService {
     }
 
     public List<UserModel> findAllByType(UserTypeEnum type) {
-        return userRepository.findAllByType(type);
+        return userRepository.findAllByType(type.name());
     }
 
     public UserModel findByEmail(String email) {

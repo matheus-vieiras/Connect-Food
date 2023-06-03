@@ -41,7 +41,7 @@ public class SpringFoxConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("br.com.connectFood.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.fiap.connectfood.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .servers(server())

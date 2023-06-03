@@ -14,6 +14,6 @@ public interface UserRepository extends JpaRepository<UserModel, Integer> {
 
     UserModel findByEmail(String email);
 
-    List<UserModel> findAllByType(UserTypeEnum type);
+    List<UserModel> findAllByType(String type);
 
 }
