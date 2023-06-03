@@ -5,11 +5,17 @@ import com.fiap.connectfood.model.UserLoginModel;
 import com.fiap.connectfood.model.UserModel;
 import com.fiap.connectfood.repository.AddressRepository;
 import com.fiap.connectfood.repository.UserRepository;
+import com.fiap.connectfood.services.exceptions.DatabaseException;
+import com.fiap.connectfood.services.exceptions.ResourceCnpjNotFoundException;
+import com.fiap.connectfood.services.exceptions.ResourceNotFoundException;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Objects;
@@ -74,28 +80,44 @@ public class UserService {
     }
 
     public void deleteUser(int id) {
-        userRepository.deleteById(id);
+        try {
+            userRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException(e.getMessage());
+        }
+
     }
 
     public Optional<UserModel> editUser(int id, UserModel userModel) {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        try {
+            userModel = userRepository.getReferenceById(id);
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-        String senhaEncoder = encoder.encode(userModel.getPassword());
-        userModel.setPassword(senhaEncoder);
+            String senhaEncoder = encoder.encode(userModel.getPassword());
+            userModel.setPassword(senhaEncoder);
 
-        return Optional.of(userRepository.save(userModel));
+            return Optional.of(userRepository.save(userModel));
+
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id);
+        }
     }
+
 
     public List<UserModel> getAllUsers() {
         return userRepository.findAll();
     }
 
-    public Optional<UserModel> getUserById(int id) {
-        return userRepository.findById(id);
+    public UserModel getUserById(int id) {
+        Optional<UserModel> userModel = userRepository.findById(id);
+        return userModel.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public UserModel getUserByCnpj(String cnpj) {
-        return userRepository.findByCnpj(cnpj);
+        Optional<UserModel> userModel = Optional.ofNullable(userRepository.findByCnpj(cnpj));
+        return userModel.orElseThrow(() -> new ResourceCnpjNotFoundException(cnpj));
     }
 
     public List<UserModel> findAllByName(String name) {

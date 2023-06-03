@@ -64,10 +64,9 @@ public class UserController {
 
     @GetMapping("/{id}")
     @ApiOperation("Trazer usuário por ID")
-    public ResponseEntity<Object> getUserById(@PathVariable(value = "id") int id) {
-        Optional<UserModel> instituicaoModelOptional = getUserService().getUserById(id);
-
-        return ResponseEntity.ok(instituicaoModelOptional);
+    public ResponseEntity<UserModel> getUserById(@PathVariable(value = "id") int id) {
+        UserModel userModel = userService.getUserById(id);
+        return ResponseEntity.ok().body(userModel);
     }
 
     @GetMapping("/cnpj/{cnpj}")

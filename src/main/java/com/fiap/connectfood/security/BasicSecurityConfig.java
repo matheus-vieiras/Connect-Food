@@ -34,8 +34,9 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/user/login",
                         "/user/register", "/user", "/user/{id}", "/user/cnpj/{cnpj}", "/user/donors", "/user/recievers",
                         "/doacao/restaurante/{nome}", "/doacao/instituicao/{nome}", "/doacao/date", "/doacao/date-between",
-                        "/doacao", "/doacao/{id}", "/user/curtir/{id}", "/user/curtidos", "/doacao/finalizadas",
-                        "/doacao/finalizar/{id}", "/user/curtidos/{cnpj}")
+                        "/doacao", "/doacao/{id}", "/user/curtir/{id}", "/user/curtidos", "/doacao/finalizadas/{cnpj}",
+                        "/doacao/finalizar/{id}", "/user/curtidos/{cnpj}", "/doacao/agendadas/{id}", "/doacao/agendadas",
+                        "doacao/{id}")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
