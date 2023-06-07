@@ -25,6 +25,8 @@ public class MapController {
 
         LocationDto locationDto = locationService.getDistanceBetweenOriginAndDestiny(origem, destino);
 
+
+
         // Consultar metodo que tras todos os usuarios
         // realizar logica para calcular a distancia do usuario logado, com todos os usuarios
         // Fazer sort, ou seja ordenarar do mais perto ao mais longe

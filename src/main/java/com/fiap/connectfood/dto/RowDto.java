@@ -4,8 +4,13 @@ import java.util.List;
 
 public class RowDto {
 
-    List<ElementDto> elements;
+    private List<ElementDto> elements;
 
+    public List<ElementDto> getElements() {
+        return elements;
+    }
 
-
+    public void setElements(List<ElementDto> elements) {
+        this.elements = elements;
+    }
 }
