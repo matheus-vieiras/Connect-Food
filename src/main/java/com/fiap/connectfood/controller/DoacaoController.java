@@ -117,8 +117,8 @@ public class DoacaoController {
     }
 
     @GetMapping("/finalizadas")
-    public ResponseEntity<List<DoacaoModel>> listarDoacoesFinalizadas() {
-        List<DoacaoModel> doacoesFinalizadas = doacaoService.findByDoacaoFinalizada();
+    public ResponseEntity<List<DoacaoModel>> listarDoacoesFinalizadas(@RequestParam (value = "cnpj") String cnpj) {
+        List<DoacaoModel> doacoesFinalizadas = doacaoService.findByDoacaoFinalizada(cnpj);
         return ResponseEntity.ok(doacoesFinalizadas);
     }
 

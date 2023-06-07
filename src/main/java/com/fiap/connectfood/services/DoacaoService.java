@@ -1,10 +1,13 @@
 package com.fiap.connectfood.services;
 
 import com.fiap.connectfood.model.DoacaoModel;
+import com.fiap.connectfood.model.UserModel;
 import com.fiap.connectfood.repository.DoacaoRepository;
+import com.fiap.connectfood.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +17,9 @@ public class DoacaoService {
 
     @Autowired
     DoacaoRepository doacaoRepository;
+
+    @Autowired
+    UserService userService;
 
     public void registerDonation(DoacaoModel doacaoModel)
     {
@@ -63,8 +69,14 @@ public class DoacaoService {
         return doacaoRepository.findDoacaoByDateBetween(startDate, endDate);
     }
 
-    public List<DoacaoModel> findByDoacaoFinalizada() {
-        return doacaoRepository.findByDoacaoFinalizada(true);
+    public List<DoacaoModel> findByDoacaoFinalizada(String cnpj) {
+        UserModel user = userService.getUserByCnpj(cnpj);
+
+        List<DoacaoModel> doacoes = new ArrayList<>();
+        doacoes.addAll(doacaoRepository.findDonationByInstituicaoAndDoacaoFinalizadaTrue(user));
+        doacoes.addAll(doacaoRepository.findDonationByRestauranteAndDoacaoFinalizadaTrue(user));
+
+        return doacoes;
     }
 
     public void finalizarDoacao(Integer id) {

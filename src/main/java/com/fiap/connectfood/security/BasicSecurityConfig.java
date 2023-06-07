@@ -35,7 +35,7 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/user/register", "/user", "/user/{id}", "/user/cnpj/{cnpj}", "/user/donors", "/user/recievers",
                         "/doacao/restaurante/{nome}", "/doacao/instituicao/{nome}", "/doacao/date", "/doacao/date-between",
                         "/doacao", "/doacao/{id}", "/user/curtir/{id}", "/user/curtidos", "/doacao/finalizadas",
-                        "/doacao/finalizar/{id}", "/user/curtidos/{cnpj}")
+                        "/doacao/finalizar/{id}", "/user/curtidos/{cnpj}", "/map/calculate-distance", "/user/get-distance/{cnpj}")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
