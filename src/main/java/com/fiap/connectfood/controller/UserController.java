@@ -39,7 +39,10 @@ public class UserController {
     @PostMapping("/register")
     @ApiOperation("Cadastrar um usuário")
     public ResponseEntity<Object> registerUser(@RequestBody UserModel userModel) {
-        getUserService().registerUser(userModel);
+        if (getUserService().registerUser(userModel) == null)
+        {
+            return ResponseEntity.ok().body("Usuário ja existe no sistema.");
+        }
 
         return ResponseEntity.ok().body("Usuário cadastrado com sucesso!");
     }

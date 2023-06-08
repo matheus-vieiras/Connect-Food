@@ -41,7 +41,7 @@ public class UserService {
 
     public Optional<UserLoginModel> login(Optional<UserLoginModel> user) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        Optional<UserModel> usuario = Optional.ofNullable(userRepository.findByEmail(user.get().getEmail()));
+        Optional<UserModel> usuario = Optional.ofNullable(userRepository.findByCnpj(user.get().getCnpj()));
 
         if (usuario.isPresent()) {
             if (encoder.matches(user.get().getPassword(), usuario.get().getPassword())) {
@@ -69,6 +69,7 @@ public class UserService {
         userLogin.get().setNome(userModel.get().getName());
         userLogin.get().setPhoto(userModel.get().getPhoto());
         userLogin.get().setType(userModel.get().getType());
+        userLogin.get().setCnpj(userModel.get().getCnpj());
 
         return userLogin;
     }
